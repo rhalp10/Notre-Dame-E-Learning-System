@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2019 at 09:39 PM
+-- Generation Time: Mar 24, 2019 at 05:08 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -42,7 +42,9 @@ CREATE TABLE `ledger` (
 INSERT INTO `ledger` (`ledger_ID`, `rtd_ID`, `ledger_Name`, `ledger_Amount`) VALUES
 (1, NULL, 'general ledger', 900),
 (2, NULL, 'general ledger', 100),
-(4, NULL, 'newww', 600);
+(4, NULL, 'newww', 600),
+(5, NULL, 'nwwwwww', 1000),
+(6, NULL, 'ledger32', 88888888888);
 
 -- --------------------------------------------------------
 
@@ -52,17 +54,54 @@ INSERT INTO `ledger` (`ledger_ID`, `rtd_ID`, `ledger_Name`, `ledger_Amount`) VAL
 
 CREATE TABLE `ledger_entry` (
   `entry_ID` int(11) UNSIGNED NOT NULL,
-  `ledger_ID` int(11) UNSIGNED DEFAULT NULL,
-  `entry_Name` varchar(85) DEFAULT NULL
+  `entry_Name` varchar(85) DEFAULT NULL,
+  `entry_F` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ledger_entry`
 --
 
-INSERT INTO `ledger_entry` (`entry_ID`, `ledger_ID`, `entry_Name`) VALUES
-(1, NULL, 'Entry 1'),
-(2, NULL, 'Entry 2');
+INSERT INTO `ledger_entry` (`entry_ID`, `entry_Name`, `entry_F`) VALUES
+(1, 'CASH', 101),
+(2, 'LOANS PAYABLE', 302),
+(4, 'FURNITURE & FIXTURE', 203),
+(5, 'UTILITY EXPENSE', 705),
+(6, 'SERVICE INCOME', 601),
+(7, 'ACCOUNT RECEIVABLE', 102);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ledger_journal`
+--
+
+CREATE TABLE `ledger_journal` (
+  `journ_ID` int(11) NOT NULL,
+  `entry_ID` int(11) DEFAULT NULL,
+  `journ_Amount` double DEFAULT NULL,
+  `journ_Type` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ledger_trialbalance`
+--
+
+CREATE TABLE `ledger_trialbalance` (
+  `trial_ID` int(11) UNSIGNED NOT NULL,
+  `trial_Name` varchar(85) DEFAULT NULL,
+  `trial_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ledger_trialbalance`
+--
+
+INSERT INTO `ledger_trialbalance` (`trial_ID`, `trial_Name`, `trial_Date`) VALUES
+(1, 'Trial 1', '2019-03-24 09:41:20'),
+(2, 'Trial 2', '2019-03-24 09:41:20');
 
 -- --------------------------------------------------------
 
@@ -137,10 +176,7 @@ INSERT INTO `ref_section` (`section_ID`, `section_Name`) VALUES
 (4, 'section 4'),
 (5, 'section 5'),
 (7, 'section6'),
-(8, 'section7'),
-(9, NULL),
-(10, NULL),
-(11, NULL);
+(8, 'section7');
 
 -- --------------------------------------------------------
 
@@ -277,7 +313,8 @@ INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_Name`, `user_Pass`, `u
 (18, 1, 'xzc798z7xc97z89x7c897', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 16:52:01', 1),
 (19, 1, 'newuser31', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 17:35:53', 1),
 (29, 1, 'asda78sd89789', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-23 07:19:09', 1),
-(30, 1, 'yyyyyyyyyyyyyyyyyyyyyyyy', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-23 07:55:56', 0);
+(30, 1, 'yyyyyyyyyyyyyyyyyyyyyyyy', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-23 07:55:56', 0),
+(31, 1, 'asd4as45d', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-24 09:09:22', 0);
 
 -- --------------------------------------------------------
 
@@ -314,6 +351,18 @@ ALTER TABLE `ledger`
 --
 ALTER TABLE `ledger_entry`
   ADD PRIMARY KEY (`entry_ID`);
+
+--
+-- Indexes for table `ledger_journal`
+--
+ALTER TABLE `ledger_journal`
+  ADD PRIMARY KEY (`journ_ID`);
+
+--
+-- Indexes for table `ledger_trialbalance`
+--
+ALTER TABLE `ledger_trialbalance`
+  ADD PRIMARY KEY (`trial_ID`);
 
 --
 -- Indexes for table `record_student_details`
@@ -376,12 +425,22 @@ ALTER TABLE `user_level`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `ledger_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ledger_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `ledger_entry`
 --
 ALTER TABLE `ledger_entry`
-  MODIFY `entry_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `entry_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `ledger_journal`
+--
+ALTER TABLE `ledger_journal`
+  MODIFY `journ_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `ledger_trialbalance`
+--
+ALTER TABLE `ledger_trialbalance`
+  MODIFY `trial_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `record_student_details`
 --
@@ -396,7 +455,7 @@ ALTER TABLE `record_teacher_detail`
 -- AUTO_INCREMENT for table `ref_section`
 --
 ALTER TABLE `ref_section`
-  MODIFY `section_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `section_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `ref_suffixname`
 --
@@ -411,7 +470,7 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
