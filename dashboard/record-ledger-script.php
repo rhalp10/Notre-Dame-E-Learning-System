@@ -10,7 +10,7 @@ $(document).ready(function(){
   var dataTable = $('#ledger_data').DataTable({
     "processing":true,
     "serverSide":true,
-    
+    "bAutoWidth": false,
     "order":[],
     "ajax":{
       url:"datatable/ledger/fetch.php",
@@ -24,12 +24,32 @@ $(document).ready(function(){
     ],
 
   });
-  var trial_dataTable =  $('#ledger_trialbalance_data').DataTable( {      
+
+
+    var trial_dataTable = $('#trialbalance_data').DataTable({
+    "processing":true,
+    "serverSide":true,
+    "bAutoWidth": false,
+    "order":[],
+    "ajax":{
+      url:"datatable/ledger_trialbalance/fetch.php",
+      type:"POST"
+    },
+    "columnDefs":[
+      {
+        "targets":[0],
+        "orderable":false,
+      },
+    ],
+
+  });
+  var journal_dataTable =  $('#journal_data').DataTable( {      
          "searching": false,
          "paging": true, 
          "info": false,         
          "lengthChange":false 
     } );
+   $("entry_data").css("width","900px");
 
   $(document).on('submit', '#ledger_form', function(event){
     event.preventDefault();
@@ -60,7 +80,7 @@ $(document).ready(function(){
       alert("Fields are Required");
     }
   });
-
+ 
   $(document).on('click', '.update', function(){
     var ledger_ID = $(this).attr("id");
     
@@ -81,13 +101,18 @@ $(document).ready(function(){
       }
     })
   });
+
+
   $(document).on('click', '.add', function(){
         document.getElementById("ledger_form").reset();
   });
-  $(document).on('click', '.view', function(){
+  $(document).on('click', '.view_trialbalance', function(){
          $('#ledger_trialbalance').modal('show');
   });
-    $(document).on('click', '.entry', function(){
+  $(document).on('click', '.view_journal', function(){
+         $('#ledger_journal_modal').modal('show');
+  })
+  $(document).on('click', '.entry', function(){
          $('#ledger_entry').modal('show');
   });
   $(document).on('click', '.delete', function(){
@@ -112,5 +137,75 @@ $(document).ready(function(){
   });
   
   
+
+  var entry_dataTable = $('#entry_data').DataTable({
+    "processing":true,
+    "serverSide":true,
+  "bAutoWidth": false,
+    "order":[],
+    "ajax":{
+      url:"datatable/ledger_entry/fetch.php",
+      type:"POST"
+    },
+    "columnDefs":[
+      {
+        "targets":[0],
+        "orderable":false,
+      },
+    ],
+
+  });
+
+    $(document).on('submit', '#ledgerentry_form', function(event){
+    event.preventDefault();
+    var ledgerentry_Name = $('#ledgerentry_Name').val();
+    var ledgerentry_f = $('#ledgerentry_f').val();
+    if(ledgerentry_Name != '' && ledgerentry_f != '')
+    {
+            $.ajax({
+              url:"datatable/ledger_entry/insert.php",
+              type:'POST',
+              data:new FormData(this),
+              contentType:false,
+              processData:false,
+              success:function(data)
+              {
+                $('#action').val("Add");
+                $('#entry_operation').val("Add");
+
+                alert(data);
+                $('#ledgerentry_form')[0].reset();
+                $('#ledgerentry_modal').modal('hide');
+                entry_dataTable.ajax.reload();
+              }
+            }); 
+    }
+    else
+    {
+      alert("Fields are Required");
+    }
+  });
+
+  $(document).on('click', '.update_entry', function(){
+    var entry_ID = $(this).attr("id");
+    
+    $.ajax({
+      url:"datatable/ledger_entry/fetch_single.php",
+      type:"POST",
+      data:{entry_ID:entry_ID},
+      dataType:"json",
+      success:function(data)
+      {
+        $('#ledgerentry_modal').modal('show');
+        $('#ledgerentry_Name').val(data.entry_Name);
+        $('#ledgerentry_f').val(data.entry_F);
+        $('#action').val("Edit");
+        $('#entry_operation').val("Edit");
+        $('.modal-title').text("Edit Entry Info");
+        $('#entry_ID').val(entry_ID);
+      }
+    })
+  });
+
 });
 </script>
