@@ -14,7 +14,7 @@
            <thead>
              <tr>
                 <th width="10%">ID</th>
-                <th width="10%">Employee ID</th>
+                <th width="10%">Teacher ID</th>
                 <th width="10%">Teacher</th>
                 <th width="10%">Section</th>
                 <th width="10%">Action</th>
