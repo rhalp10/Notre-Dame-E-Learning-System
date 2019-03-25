@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2019 at 05:08 PM
+-- Generation Time: Mar 25, 2019 at 07:31 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -112,10 +112,10 @@ INSERT INTO `ledger_trialbalance` (`trial_ID`, `trial_Name`, `trial_Date`) VALUE
 CREATE TABLE `record_student_details` (
   `rsd_ID` int(11) UNSIGNED NOT NULL,
   `user_ID` int(11) UNSIGNED DEFAULT NULL,
-  `rsd_StudNum` varchar(25) NOT NULL,
-  `rsd_FName` varchar(85) NOT NULL,
-  `rsd_MName` varchar(85) NOT NULL,
-  `rsd_LName` varchar(85) NOT NULL,
+  `rsd_StudNum` varchar(25) DEFAULT NULL,
+  `rsd_FName` varchar(85) DEFAULT NULL,
+  `rsd_MName` varchar(85) DEFAULT NULL,
+  `rsd_LName` varchar(85) DEFAULT NULL,
   `suffix_ID` int(11) UNSIGNED DEFAULT NULL,
   `sex_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -125,9 +125,13 @@ CREATE TABLE `record_student_details` (
 --
 
 INSERT INTO `record_student_details` (`rsd_ID`, `user_ID`, `rsd_StudNum`, `rsd_FName`, `rsd_MName`, `rsd_LName`, `suffix_ID`, `sex_ID`) VALUES
-(1, 2, '201310656', 'Rhalp Darren', 'Resuena', 'Cabrera', NULL, 1),
-(2, 3, '201310657', 'Franzmarc', 'Resuena', 'Cabrera', NULL, 1),
-(4, NULL, '685187', 'yeh', 'yeh', 'yeh', 1, 1);
+(1, 2, '10601080', 'student 1', 'student 1', 'student 1', NULL, 1),
+(2, 3, '10601081', 'student 2', 'student 2', 'student 2', NULL, 1),
+(3, NULL, '10601082', 'student 3', 'student 3', 'student 3', NULL, 2),
+(4, NULL, '10601083', 'student 4', 'student 4', 'student 4', NULL, 1),
+(6, NULL, '10601085', 'student 6', 'student 6', 'student 6', NULL, 2),
+(8, NULL, '10601086', 'student 7', 'student 7', 'student 7', NULL, 1),
+(9, NULL, '10601087', 'student 8', 'student 8', 'student 8', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -176,7 +180,29 @@ INSERT INTO `ref_section` (`section_ID`, `section_Name`) VALUES
 (4, 'section 4'),
 (5, 'section 5'),
 (7, 'section6'),
-(8, 'section7');
+(8, 'section7'),
+(9, 'section8');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ref_semester`
+--
+
+CREATE TABLE `ref_semester` (
+  `sem_ID` int(11) UNSIGNED NOT NULL,
+  `sem_Start` date NOT NULL,
+  `sem_End` date NOT NULL,
+  `sem_Status` tinyint(3) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ref_semester`
+--
+
+INSERT INTO `ref_semester` (`sem_ID`, `sem_Start`, `sem_End`, `sem_Status`) VALUES
+(1, '2017-03-01', '2018-03-01', 0),
+(2, '2019-03-12', '2020-03-30', 1);
 
 -- --------------------------------------------------------
 
@@ -264,23 +290,66 @@ INSERT INTO `ref_suffixname` (`suffix_ID`, `suffix`, `suffix_Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `semester`
+-- Table structure for table `room`
 --
 
-CREATE TABLE `semester` (
-  `sem_ID` int(11) UNSIGNED NOT NULL,
-  `sem_Start` date DEFAULT NULL,
-  `sem_End` date DEFAULT NULL,
-  `status_ID` int(11) UNSIGNED DEFAULT NULL
+CREATE TABLE `room` (
+  `room_ID` int(11) UNSIGNED NOT NULL,
+  `rtd_ID` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `semester`
+-- Dumping data for table `room`
 --
 
-INSERT INTO `semester` (`sem_ID`, `sem_Start`, `sem_End`, `status_ID`) VALUES
-(1, '2018-00-00', '2019-00-00', NULL),
-(2, '2019-00-00', '2020-00-00', NULL);
+INSERT INTO `room` (`room_ID`, `rtd_ID`) VALUES
+(1, 1),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_announcements`
+--
+
+CREATE TABLE `room_announcements` (
+  `ann_ID` int(11) UNSIGNED NOT NULL,
+  `room_ID` int(11) UNSIGNED DEFAULT NULL,
+  `ann_Title` varchar(85) DEFAULT NULL,
+  `ann_desc` text,
+  `ann_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `room_announcements`
+--
+
+INSERT INTO `room_announcements` (`ann_ID`, `room_ID`, `ann_Title`, `ann_desc`, `ann_Date`) VALUES
+(1, NULL, 'annoucement 1', '<p>annoucement 1 annoucement 1 annoucement 1 annoucement 1 annoucement 1 </p>', '2019-03-25 17:17:57'),
+(2, NULL, 'annoucement 2', '<p>annoucement 1 annoucement 1 annoucement 1 annoucement 1 annoucement 1 </p>', '2019-03-25 17:18:00'),
+(8, NULL, 'Announcement 3', '122222222222222222', '2019-03-25 17:42:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section_student`
+--
+
+CREATE TABLE `section_student` (
+  `sstd_ID` int(11) UNSIGNED NOT NULL,
+  `rsd_ID` int(11) UNSIGNED DEFAULT NULL,
+  `section_ID` int(11) UNSIGNED DEFAULT NULL,
+  `sem_ID` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `section_student`
+--
+
+INSERT INTO `section_student` (`sstd_ID`, `rsd_ID`, `section_ID`, `sem_ID`) VALUES
+(1, 1, 1, 2),
+(2, 2, 1, 2),
+(3, 4, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -291,6 +360,7 @@ INSERT INTO `semester` (`sem_ID`, `sem_Start`, `sem_End`, `status_ID`) VALUES
 CREATE TABLE `user_accounts` (
   `user_ID` int(11) UNSIGNED NOT NULL,
   `level_ID` tinyint(11) UNSIGNED DEFAULT NULL COMMENT 'user level',
+  `user_img` longblob,
   `user_Name` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_Pass` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_Email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -302,19 +372,11 @@ CREATE TABLE `user_accounts` (
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_Name`, `user_Pass`, `user_Email`, `user_Registered`, `user_status`) VALUES
-(1, 3, 'rhalp10', '$P$BCAA1YEnm0BZ.DJ2X/cXEil0XJcfVM0', 'email@gmail.com', '2018-10-20 00:58:10', 1),
-(2, 2, '19874546', 'XnCOFXzvzFGHXS/GZ5kVEZ9PAE2N+oCeqydK87yGuwo=', 'email@gmail.com', '2019-02-19 17:13:44', 0),
-(3, 2, '19874548', 'Yl1K09d95jpJ1DheIeAi/61UUccd9tATJ9GKkAXiAX8=', 'email@gmail.com', '2019-02-19 17:21:46', 0),
-(4, 3, 'admin', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-02-28 16:37:27', 1),
-(6, 2, 'instructor', 'Pds40EmB+V/6xvKy2SFGjkoVLTwzmjfbRI2QGpPmGz0=', 'email@gmail.com', '2019-03-10 18:08:27', 0),
-(7, 1, '201310656', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-03-10 18:26:16', 0),
-(13, 3, 'raizen21', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-03-12 14:46:04', 1),
-(18, 1, 'xzc798z7xc97z89x7c897', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 16:52:01', 1),
-(19, 1, 'newuser31', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 17:35:53', 1),
-(29, 1, 'asda78sd89789', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-23 07:19:09', 1),
-(30, 1, 'yyyyyyyyyyyyyyyyyyyyyyyy', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-23 07:55:56', 0),
-(31, 1, 'asd4as45d', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'rhalpdarrencabrera@gmail.com', '2019-03-24 09:09:22', 0);
+INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_img`, `user_Name`, `user_Pass`, `user_Email`, `user_Registered`, `user_status`) VALUES
+(2, 1, NULL, '10601080', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-02-19 17:13:44', 1),
+(3, 1, NULL, '10601081', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-02-19 17:21:46', 0),
+(4, 3, NULL, 'admin', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-02-28 16:37:27', 1),
+(7, 2, NULL, 'teacher', '6Bgzqn4mnCPjx432mpfOVbU87Mi3sy29KRe8A1l+2X0=', 'teacher@gmail.com', '2019-03-25 18:28:31', 1);
 
 -- --------------------------------------------------------
 
@@ -386,6 +448,12 @@ ALTER TABLE `ref_section`
   ADD PRIMARY KEY (`section_ID`);
 
 --
+-- Indexes for table `ref_semester`
+--
+ALTER TABLE `ref_semester`
+  ADD PRIMARY KEY (`sem_ID`);
+
+--
 -- Indexes for table `ref_sex`
 --
 ALTER TABLE `ref_sex`
@@ -398,10 +466,22 @@ ALTER TABLE `ref_suffixname`
   ADD PRIMARY KEY (`suffix_ID`);
 
 --
--- Indexes for table `semester`
+-- Indexes for table `room`
 --
-ALTER TABLE `semester`
-  ADD PRIMARY KEY (`sem_ID`);
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`room_ID`);
+
+--
+-- Indexes for table `room_announcements`
+--
+ALTER TABLE `room_announcements`
+  ADD PRIMARY KEY (`ann_ID`);
+
+--
+-- Indexes for table `section_student`
+--
+ALTER TABLE `section_student`
+  ADD PRIMARY KEY (`sstd_ID`);
 
 --
 -- Indexes for table `user_accounts`
@@ -445,7 +525,7 @@ ALTER TABLE `ledger_trialbalance`
 -- AUTO_INCREMENT for table `record_student_details`
 --
 ALTER TABLE `record_student_details`
-  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `record_teacher_detail`
 --
@@ -455,22 +535,37 @@ ALTER TABLE `record_teacher_detail`
 -- AUTO_INCREMENT for table `ref_section`
 --
 ALTER TABLE `ref_section`
-  MODIFY `section_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `section_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `ref_semester`
+--
+ALTER TABLE `ref_semester`
+  MODIFY `sem_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `ref_suffixname`
 --
 ALTER TABLE `ref_suffixname`
   MODIFY `suffix_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=47;
 --
--- AUTO_INCREMENT for table `semester`
+-- AUTO_INCREMENT for table `room`
 --
-ALTER TABLE `semester`
-  MODIFY `sem_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `room`
+  MODIFY `room_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `room_announcements`
+--
+ALTER TABLE `room_announcements`
+  MODIFY `ann_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `section_student`
+--
+ALTER TABLE `section_student`
+  MODIFY `sstd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
