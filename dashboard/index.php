@@ -9,7 +9,7 @@ else{
 $PageTitle = "Sample Page";
 $PageIcon = "";
 $user_image = "assets/images/placeholder.jpg";
-$user_name = "User Sample";
+$user_name = $_SESSION['login_user'];
 $user_level = $_SESSION['login_level'];
 $user_fName = "NAME NAME";
 $user_profile_image = "../img/avatar1_small.jpg";
