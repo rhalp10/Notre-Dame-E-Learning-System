@@ -65,7 +65,7 @@ if(isset($_POST["operation"]))
 		$suffix = $_POST["suffix"];
 		$sex = $_POST["sex"];
 		
-		echo $sql ="UPDATE `record_student_details` 
+		 $sql ="UPDATE `record_student_details` 
 		SET 
 		`rsd_StudNum` = :lrn,
 		`rsd_FName` = :fname,
@@ -95,5 +95,4 @@ if(isset($_POST["operation"]))
 		}
 	}
 }
-print_r($_POST);
 ?>
