@@ -1,12 +1,12 @@
 <?php
 include('db.php');
 include('function.php');
-if(isset($_POST["section_ID"]))
+if(isset($_POST["semester_ID"]))
 {
 	$output = array();
 	$statement = $conn->prepare(
-		"SELECT * FROM `ref_section`
-		WHERE section_ID = '".$_POST["section_ID"]."' 
+		"SELECT * FROM `ref_semester`
+		WHERE sem_ID = '".$_POST["semester_ID"]."' 
 		LIMIT 1"
 	);
 	$statement->execute();
@@ -14,7 +14,9 @@ if(isset($_POST["section_ID"]))
 	foreach($result as $row)
 	{
 
-		$output["section_Name"] = $row["section_Name"];
+		$output["sem_Start"] = $row["sem_Start"];
+		$output["sem_End"] = $row["sem_End"];
+		$output["sem_Status"] = $row["sem_Status"];
 	
 	}
 	echo json_encode($output);

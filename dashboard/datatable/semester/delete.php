@@ -3,15 +3,15 @@
 include('db.php');
 include("function.php");
 
-if(isset($_POST["section_ID"]))
+if(isset($_POST["semester_ID"]))
 {
 	
 	$statement = $conn->prepare(
-		"DELETE FROM `ref_section` WHERE section_ID = :section_ID"
+		"DELETE FROM `ref_semester` WHERE sem_ID = :semester_ID"
 	);
 	$result = $statement->execute(
 		array(
-			':section_ID'	=>	$_POST["section_ID"]
+			':semester_ID'	=>	$_POST["semester_ID"]
 		)
 	);
 	
