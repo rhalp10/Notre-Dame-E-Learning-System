@@ -7,7 +7,7 @@
  */
 
 session_start(); // Starting Session
-print_r($_SESSION);
+
 include('data-md5.php');
 $error=''; // Variable To Store Error Message
 function success(){
@@ -43,11 +43,13 @@ if (isset($_POST['submit_student'])) {
 										window.location='index.php';
 									</script>";
 				// Change this to bootstrap alert
+
 			
 			}
 		else
 		{
-			login();
+			$level = 1;
+			login($level);
 			
 		}
 }
@@ -63,7 +65,8 @@ if (isset($_POST['submit_teacher'])) {
 		
 		else
 		{
-			login();
+			$level = 2;
+			login($level);
 		}
 }
 if (isset($_POST['submit_admin'])) {
@@ -78,26 +81,28 @@ if (isset($_POST['submit_admin'])) {
 		
 		else
 		{
-			login();
+			$level = 3;
+			login($level);
 		}
 }
-function login(){
+function login($chk_level){
 
 			include('dbconfig.php');
 			// Define $username and $password
-			echo $username=$_POST['username'];
-			echo $password=$_POST['password'];
+			
+			$username=$_POST['username'];
+			$password=$_POST['password'];
 			// To protect MySQL injection for Security purpose
-			echo $username = stripslashes($username);
-			echo $password = stripslashes($password);
-			echo $username = mysqli_real_escape_string($con,$username);
-			echo $password = mysqli_real_escape_string($con,$password);
+			$username = stripslashes($username);
+			$password = stripslashes($password);
+			$username = mysqli_real_escape_string($con,$username);
+			$password = mysqli_real_escape_string($con,$password);
 			
 			
  			$input = "$password";
-			echo $encrypted = encryptIt($input);
+			$encrypted = encryptIt($input);
 			// SQL query to fetch information of registerd users and finds user match.
-			$query = mysqli_query($con,"SELECT * FROM `user_accounts` WHERE `user_Name` = '$username' AND `user_Pass` = '$encrypted'");
+			$query = mysqli_query($con,"SELECT * FROM `user_accounts` WHERE `user_Name` = '$username' AND `user_Pass` = '$encrypted' AND `level_ID` = '$chk_level' AND `user_status` = 1");
 			if (mysqli_num_rows($query) > 0) 
 			{
 				$rows = mysqli_fetch_assoc($query);
