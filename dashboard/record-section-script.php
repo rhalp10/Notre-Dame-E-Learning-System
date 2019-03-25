@@ -73,7 +73,24 @@ $(document).ready(function(){
       }
     })
   });
-  $(document).on('click', '.add', function(){x
+    $(document).on('click', '.view_student', function(){
+    var section_ID = $(this).attr("id");
+    
+    $.ajax({
+      url:"datatable/section/fetch_sectioncontent.php",
+      type:"POST",
+      data:{section_ID:section_ID},
+      dataType:"html",
+      success:function(data)
+      {
+        $('#section_content_modal').modal('show');
+        $('#section_student_content').html(data);
+      }
+    })
+  });
+
+
+  $(document).on('click', '.add', function(){
         document.getElementById("section_form").reset();
   });
   $(document).on('click', '.delete', function(){

@@ -308,6 +308,7 @@
                               <td>101</td>
                               <td>100</td>
                               <td></td>
+                              <td>-100</td>
                             </tr>
                              <tr>
                               <td>MARCH 01</td>
@@ -315,6 +316,7 @@
                               <td>101</td>
                               <td></td>
                               <td>900</td>
+                              <td>800</td>
                             </tr>
                           </tbody>
                         </table>
@@ -398,8 +400,9 @@
                         <table id="ledger_trialbalance_data" class="table table-bordered">
                           <thead>
                             <tr>
-                              <th>Date</th>
-                              <th>Description</th>
+                              <th>DATE</th>
+                              <th>ACCOUNT & DESCRIPTION</th>
+                              <th>F</th>
                               <th>Debit</th>
                               <th>Credit</th>
                               <th>Balance</th>
@@ -407,25 +410,20 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>John</td>
-                              <td>Doe</td>
-                              <td>john@example.com</td>
-                              <td>john@example.com</td>
-                              <td>john@example.com</td>
+                              <td>MARCH 01</td>
+                              <td>CASH</td>
+                              <td>101</td>
+                              <td>100</td>
+                              <td></td>
+                              <td>-100</td>
                             </tr>
-                            <tr>
-                              <td>Mary</td>
-                              <td>Moe</td>
-                              <td>mary@example.com</td>
-                              <td>john@example.com</td>
-                              <td>john@example.com</td>
-                            </tr>
-                            <tr>
-                              <td>July</td>
-                              <td>Dooley</td>
-                              <td>july@example.com</td>
-                              <td>john@example.com</td>
-                              <td>john@example.com</td>
+                             <tr>
+                              <td>MARCH 01</td>
+                              <td>CASH</td>
+                              <td>101</td>
+                              <td></td>
+                              <td>900</td>
+                              <td>800</td>
                             </tr>
                           </tbody>
                         </table>

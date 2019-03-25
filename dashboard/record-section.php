@@ -22,6 +22,7 @@
         </div>
       </div>
   </div>
+</div>
    <!-- add modal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="section_modal">
       <div class="modal-dialog" role="document">
@@ -34,10 +35,9 @@
           <form action="" method="POST"  class="form-horizontal" id="section_form" enctype="multipart/form-data">
 
           <div class="modal-body">
-            <div class="messages"></div>
               <div class="row clearfix">
                   <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 form-control-label">
-                      <label for="EmpID">Section Name</label>
+                      <label for="section_Name">Section Name</label>
                   </div>
                   <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7">
                       <div class="form-group">
@@ -56,6 +56,28 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
           </form> 
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- /add modal -->
+
+       <!-- add modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="section_content_modal">
+      <div class="modal-dialog" role="document" style=" width:900px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span>Section Student</h4>
+          </div>
+          <div class="modal-body">
+            <div id="section_student_content"></div>
+          </div>
+          <div class="modal-footer">
+          <input type="hidden" name="section_ID" id="section_ID" />
+          <input type="hidden" name="operation" id="operation" value="Add" />
+          <input type="submit" name="action" id="action" class="btn btn-success" value="Submit" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

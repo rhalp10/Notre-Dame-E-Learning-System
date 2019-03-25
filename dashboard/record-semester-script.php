@@ -7,13 +7,13 @@ $(document).ready(function(){
   });
 
 
-  var dataTable = $('#section_data').DataTable({
+  var dataTable = $('#semester_data').DataTable({
     "processing":true,
     "serverSide":true,
     
     "order":[],
     "ajax":{
-      url:"datatable/section/fetch.php",
+      url:"datatable/semester/fetch.php",
       type:"POST"
     },
     "columnDefs":[
@@ -25,13 +25,15 @@ $(document).ready(function(){
 
   });
 
-  $(document).on('submit', '#section_form', function(event){
+  $(document).on('submit', '#semester_form', function(event){
     event.preventDefault();
-    var section_Name = $('#section_Name').val();
-    if(section_Name != '')
+    var semester_Start = $('#semester_Start').val();
+    var semester_End = $('#semester_End').val();
+    var semester_Stat = $('#semester_Stat').val();
+    if(semester_Start != '' && semester_End != '' && semester_Stat != '')
     {
             $.ajax({
-              url:"datatable/section/insert.php",
+              url:"datatable/semester/insert.php",
               type:'POST',
               data:new FormData(this),
               contentType:false,
@@ -42,8 +44,8 @@ $(document).ready(function(){
                 $('#operation').val("Add");
 
                 alert(data);
-                $('#section_form')[0].reset();
-                $('#section_modal').modal('hide');
+                $('#semester_form')[0].reset();
+                $('#semester_modal').modal('hide');
                 dataTable.ajax.reload();
               }
             }); 
@@ -55,35 +57,40 @@ $(document).ready(function(){
   });
 
   $(document).on('click', '.update', function(){
-    var section_ID = $(this).attr("id");
+    var semester_ID = $(this).attr("id");
     
     $.ajax({
-      url:"datatable/section/fetch_single.php",
+      url:"datatable/semester/fetch_single.php",
       type:"POST",
-      data:{section_ID:section_ID},
+      data:{semester_ID:semester_ID},
       dataType:"json",
       success:function(data)
       {
-        $('#section_modal').modal('show');
-        $('#section_Name').val(data.section_Name);
+        $('#semester_modal').modal('show');
+        $('#semester_Start').val(data.sem_Start);
+        $('#semester_End').val(data.sem_End);
+        $('#semester_Stat').val(data.sem_Status).change();
         $('#action').val("Edit");
         $('#operation').val("Edit");
-        $('.modal-title').text("Edit Section Info");
-        $('#section_ID').val(section_ID);
+        $('.modal-title').text("Edit Semester Info");
+        $('#semester_ID').val(semester_ID);
       }
     })
   });
-  $(document).on('click', '.add', function(){x
-        document.getElementById("section_form").reset();
+
+
+
+  $(document).on('click', '.add', function(){
+        document.getElementById("semester_form").reset();
   });
   $(document).on('click', '.delete', function(){
-    var section_ID = $(this).attr("id");
+    var semester_ID = $(this).attr("id");
     if(confirm("Are you sure you want to delete this?"))
     {
       $.ajax({
-        url:"datatable/section/delete.php",
+        url:"datatable/semester/delete.php",
         type:"POST",
-        data:{section_ID:section_ID},
+        data:{semester_ID:semester_ID},
         success:function(data)
         {
           alert(data);

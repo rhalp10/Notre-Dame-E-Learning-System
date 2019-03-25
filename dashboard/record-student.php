@@ -25,7 +25,7 @@
       </div>
   </div>
 
-
+</div>
   <!-- add modal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="student_modal">
       <div class="modal-dialog" role="document">
