@@ -29,10 +29,12 @@ $filtered_rows = $statement->rowCount();
 foreach($result as $row)
 {
 	
-
+ 	$semester_start = date_create($row["sem_Start"]);
+  	$semester_end=date_create($row["sem_End"]);
+  
 	$sub_array = array();
 	$sub_array[] = $row["sem_ID"];
-	$sub_array[] = $row["sem_Start"].' - '. $row["sem_End"];
+	$sub_array[] = date_format($semester_start,"Y").' - '. date_format($semester_end,"Y");
 	$sub_array[] = check_status($row["sem_Status"]);
 	$sub_array[] = '<div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#" id="'.$row["sem_ID"].'" class="update">Update</a></li><li><a href="#" id="'.$row["sem_ID"].'" class="delete">Delete</a></li></ul></div>';
 	// $sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete">Delete</button>';

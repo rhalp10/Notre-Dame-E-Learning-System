@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2019 at 07:31 PM
+-- Generation Time: Apr 02, 2019 at 11:48 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -154,9 +154,10 @@ CREATE TABLE `record_teacher_detail` (
 --
 
 INSERT INTO `record_teacher_detail` (`rtd_ID`, `rtd_EmpID`, `rtd_FName`, `rtd_MName`, `rtd_LName`, `suffix_ID`, `sex_ID`) VALUES
-(1, '65897', 'asd', 'fds', 'fds', NULL, 1),
+(1, '65897', 'teacher1', 'teacher', 'teacher', 1, 1),
 (2, '98789', 'asd', 'asd', 'sd', NULL, 2),
-(4, '99999', 'asd', 'asd', 'asd', 1, 1);
+(4, '99999', 'hhh', 'asd', 'asd', 1, 1),
+(5, '15644', 'alonte', 'lyles', 'asd', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -290,31 +291,12 @@ INSERT INTO `ref_suffixname` (`suffix_ID`, `suffix`, `suffix_Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room`
---
-
-CREATE TABLE `room` (
-  `room_ID` int(11) UNSIGNED NOT NULL,
-  `rtd_ID` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `room`
---
-
-INSERT INTO `room` (`room_ID`, `rtd_ID`) VALUES
-(1, 1),
-(2, 1);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `room_announcements`
 --
 
 CREATE TABLE `room_announcements` (
   `ann_ID` int(11) UNSIGNED NOT NULL,
-  `room_ID` int(11) UNSIGNED DEFAULT NULL,
+  `roa_ID` int(11) UNSIGNED DEFAULT NULL,
   `ann_Title` varchar(85) DEFAULT NULL,
   `ann_desc` text,
   `ann_Date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
@@ -324,32 +306,53 @@ CREATE TABLE `room_announcements` (
 -- Dumping data for table `room_announcements`
 --
 
-INSERT INTO `room_announcements` (`ann_ID`, `room_ID`, `ann_Title`, `ann_desc`, `ann_Date`) VALUES
+INSERT INTO `room_announcements` (`ann_ID`, `roa_ID`, `ann_Title`, `ann_desc`, `ann_Date`) VALUES
 (1, NULL, 'annoucement 1', '<p>annoucement 1 annoucement 1 annoucement 1 annoucement 1 annoucement 1 </p>', '2019-03-25 17:17:57'),
 (2, NULL, 'annoucement 2', '<p>annoucement 1 annoucement 1 annoucement 1 annoucement 1 annoucement 1 </p>', '2019-03-25 17:18:00'),
-(8, NULL, 'Announcement 3', '122222222222222222', '2019-03-25 17:42:31');
+(8, NULL, 'Announcement 3', '122222222222222222', '2019-03-25 17:42:31'),
+(9, NULL, 'asdasd', 'asdasd', '2019-04-02 09:33:36');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `section_student`
+-- Table structure for table `room_assign`
 --
 
-CREATE TABLE `section_student` (
-  `sstd_ID` int(11) UNSIGNED NOT NULL,
-  `rsd_ID` int(11) UNSIGNED DEFAULT NULL,
+CREATE TABLE `room_assign` (
+  `roa_ID` int(11) UNSIGNED NOT NULL,
+  `rtd_ID` int(11) UNSIGNED DEFAULT NULL,
   `section_ID` int(11) UNSIGNED DEFAULT NULL,
-  `sem_ID` int(10) UNSIGNED DEFAULT NULL
+  `sem_ID` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `section_student`
+-- Dumping data for table `room_assign`
 --
 
-INSERT INTO `section_student` (`sstd_ID`, `rsd_ID`, `section_ID`, `sem_ID`) VALUES
-(1, 1, 1, 2),
-(2, 2, 1, 2),
-(3, 4, 1, 2);
+INSERT INTO `room_assign` (`roa_ID`, `rtd_ID`, `section_ID`, `sem_ID`) VALUES
+(1, 1, 1, 1),
+(13, 1, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_student`
+--
+
+CREATE TABLE `room_student` (
+  `ros_ID` int(11) UNSIGNED NOT NULL,
+  `roa_ID` int(11) UNSIGNED DEFAULT NULL,
+  `rsd_ID` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `room_student`
+--
+
+INSERT INTO `room_student` (`ros_ID`, `roa_ID`, `rsd_ID`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -466,22 +469,22 @@ ALTER TABLE `ref_suffixname`
   ADD PRIMARY KEY (`suffix_ID`);
 
 --
--- Indexes for table `room`
---
-ALTER TABLE `room`
-  ADD PRIMARY KEY (`room_ID`);
-
---
 -- Indexes for table `room_announcements`
 --
 ALTER TABLE `room_announcements`
   ADD PRIMARY KEY (`ann_ID`);
 
 --
--- Indexes for table `section_student`
+-- Indexes for table `room_assign`
 --
-ALTER TABLE `section_student`
-  ADD PRIMARY KEY (`sstd_ID`);
+ALTER TABLE `room_assign`
+  ADD PRIMARY KEY (`roa_ID`);
+
+--
+-- Indexes for table `room_student`
+--
+ALTER TABLE `room_student`
+  ADD PRIMARY KEY (`ros_ID`);
 
 --
 -- Indexes for table `user_accounts`
@@ -530,7 +533,7 @@ ALTER TABLE `record_student_details`
 -- AUTO_INCREMENT for table `record_teacher_detail`
 --
 ALTER TABLE `record_teacher_detail`
-  MODIFY `rtd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rtd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `ref_section`
 --
@@ -540,27 +543,27 @@ ALTER TABLE `ref_section`
 -- AUTO_INCREMENT for table `ref_semester`
 --
 ALTER TABLE `ref_semester`
-  MODIFY `sem_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `sem_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `ref_suffixname`
 --
 ALTER TABLE `ref_suffixname`
   MODIFY `suffix_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=47;
 --
--- AUTO_INCREMENT for table `room`
---
-ALTER TABLE `room`
-  MODIFY `room_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
 -- AUTO_INCREMENT for table `room_announcements`
 --
 ALTER TABLE `room_announcements`
-  MODIFY `ann_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ann_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT for table `section_student`
+-- AUTO_INCREMENT for table `room_assign`
 --
-ALTER TABLE `section_student`
-  MODIFY `sstd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `room_assign`
+  MODIFY `roa_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `room_student`
+--
+ALTER TABLE `room_student`
+  MODIFY `ros_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --

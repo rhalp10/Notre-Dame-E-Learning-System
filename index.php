@@ -1,9 +1,11 @@
-<?
+<?php
 session_start();
 if(isset($_SESSION['login_user']))
 {      
      header('location: dashboard');
+    
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

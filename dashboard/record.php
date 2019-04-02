@@ -43,8 +43,40 @@ include ("global_style.php");
             <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3> -->
             <h6 style="background-image: url('../img/adminbanner.png');background-size: cover;height: 100px;border-radius: 5px;box-shadow: 0 15px 25px rgba(0,0,0,.9)"></h6>
             <ol class="breadcrumb">
-              <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="fa fa-laptop"></i>Dashboard</li>
+              <li><i class="fa fa-home"></i><a href="index">Home</a></li>
+              <?php 
+              if ($manage == "account") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Account Management</li>
+               <?php
+              }
+              if ($manage == "student") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Student Management</li>
+               <?php
+              }
+               if ($manage == "teacher") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Teacher Management</li>
+               <?php
+              }
+               if ($manage == "semester") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Semester Management</li>
+               <?php
+              }
+               if ($manage == "section") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Section Management</li>
+               <?php
+              }
+               if ($manage == "ledger") {
+               ?>
+                <li><i class="fa fa-laptop"></i>Ledger Management</li>
+               <?php
+              }
+              ?>
+              
             </ol>
           </div>
         </div>
